@@ -1,0 +1,21 @@
+@import 'tailwindcss';
+
+@layer theme {
+  :root {
+    --font-sans: 'Satoshi', 'Inter', system-ui, -apple-system, sans-serif;
+  }
+}
+
+@layer utilities {
+  .animate-pulse-slow {
+    animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .backdrop-blur-xl {
+    backdrop-filter: blur(24px);
+  }
+
+  .glow-primary {
+    box-shadow: 0 0 20px rgba(62, 111, 166, 0.4);
+  }
+}
