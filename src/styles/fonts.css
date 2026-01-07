@@ -1,3 +1,5 @@
-/* PP Neue Montreal Font (Fallback to Figtree) */
+/* PolySans Trial Font */
+@import url('https://fonts.cdnfonts.com/css/polysans-trial');
+
+/* Fallback fonts */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-@import url('https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,600,700,800,900&display=swap');

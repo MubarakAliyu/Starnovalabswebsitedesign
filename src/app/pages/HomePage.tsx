@@ -2,6 +2,7 @@ import { motion } from 'motion/react';
 import { ArrowRight, Heart, Users, Lightbulb, Code, BookOpen, Sparkles, Mail, Send } from 'lucide-react';
 import { ParticleField } from '../components/ParticleField';
 import { ProductCarousel } from '../components/ProductCarousel';
+import { CompaniesSection } from '../components/CompaniesSection';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
@@ -39,20 +40,19 @@ export function HomePage() {
         <div className="absolute bottom-1/4 -right-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
 
         <div className="relative z-10 max-w-6xl mx-auto px-6 lg:px-8 pt-20 text-center">
-          <motion.h1
+          <motion.h2
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            className="text-4xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6 leading-tight"
           >
             We build meaningful technology that empowers minds and transforms learning.
-          </motion.h1>
+          </motion.h2>
 
           <motion.p
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="text-lg md:text-xl text-foreground/70 mb-10 max-w-3xl mx-auto"
+            className="text-muted-foreground mb-10 max-w-3xl mx-auto"
           >
             StarNova Labs is a technology innovator creating digital products for education, 
             creativity, and community growth.
@@ -100,10 +100,10 @@ export function HomePage() {
       <section id="mission" className="py-32 px-6 lg:px-8 relative border-t border-white/10">
         <div className="max-w-7xl mx-auto">
           <motion.div {...fadeInUp} className="text-center mb-20">
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
+            <h2 className="mb-6">
               Why StarNova Labs Exists
             </h2>
-            <p className="text-xl text-foreground/70 max-w-3xl mx-auto">
+            <p className="text-muted-foreground max-w-3xl mx-auto">
               We believe technology should empower, educate, and inspire.
             </p>
           </motion.div>
@@ -141,7 +141,7 @@ export function HomePage() {
                 <div className="w-16 h-16 mb-6 text-primary group-hover:scale-110 transition-transform duration-300">
                   {item.icon}
                 </div>
-                <h3 className="text-2xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors">
+                <h3 className="text-foreground mb-4 group-hover:text-primary transition-colors">
                   {item.title}
                 </h3>
                 <p className="text-foreground/70 leading-relaxed">
@@ -157,10 +157,10 @@ export function HomePage() {
       <section id="products" className="py-32 px-6 lg:px-8 bg-gradient-to-b from-transparent to-primary/5 border-t border-white/10">
         <div className="max-w-7xl mx-auto">
           <motion.div {...fadeInUp} className="text-center mb-20">
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
+            <h2 className="mb-6">
               Our Products
             </h2>
-            <p className="text-xl text-foreground/70 max-w-3xl mx-auto">
+            <p className="text-muted-foreground max-w-3xl mx-auto">
               Crafted with care, built to inspire, designed to make a difference.
             </p>
           </motion.div>
@@ -201,7 +201,7 @@ export function HomePage() {
                   <div className="w-16 h-16 mb-6 text-primary group-hover:scale-110 transition-transform duration-300">
                     {product.icon}
                   </div>
-                  <h3 className="text-2xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">
+                  <h3 className="text-foreground mb-3 group-hover:text-primary transition-colors">
                     {product.title}
                   </h3>
                   <p className="text-foreground/70 mb-6">
@@ -246,10 +246,10 @@ export function HomePage() {
       <section className="py-32 px-6 lg:px-8 border-t border-white/10">
         <div className="max-w-7xl mx-auto">
           <motion.div {...fadeInUp} className="text-center mb-20">
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
+            <h2 className="mb-6">
               What We Do
             </h2>
-            <p className="text-xl text-foreground/70 max-w-3xl mx-auto">
+            <p className="text-muted-foreground max-w-3xl mx-auto">
               Full-stack capabilities to bring your vision to life.
             </p>
           </motion.div>
@@ -269,7 +269,7 @@ export function HomePage() {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 className="bg-card-bg border border-white/10 rounded-xl p-6 hover:border-primary/50 transition-all duration-300"
               >
-                <h3 className="font-bold text-foreground mb-2">{feature.title}</h3>
+                <h3 className="text-foreground mb-2">{feature.title}</h3>
                 <p className="text-sm text-foreground/60">{feature.desc}</p>
               </motion.div>
             ))}
@@ -306,14 +306,14 @@ export function HomePage() {
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
             >
-              <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
+              <h2 className="mb-6">
                 A people-first tech innovation studio
               </h2>
-              <p className="text-xl text-foreground/70 leading-relaxed mb-6">
+              <p className="text-muted-foreground leading-relaxed mb-6">
                 StarNova Labs is a technology design and products company building digital tools 
                 that make learning intuitive, joyful, and accessible.
               </p>
-              <p className="text-lg text-foreground/60 leading-relaxed">
+              <p className="text-muted-foreground leading-relaxed">
                 We combine cutting-edge technology with human-centered design to create 
                 experiences that truly matter. From education to community growth, our products 
                 are built with purpose and passion.
@@ -323,14 +323,17 @@ export function HomePage() {
         </div>
       </section>
 
+      {/* Companies/Brands Section */}
+      <CompaniesSection />
+
       {/* Contact Section */}
       <section id="contact" className="py-32 px-6 lg:px-8 border-t border-white/10">
         <div className="max-w-4xl mx-auto">
           <motion.div {...fadeInUp} className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
+            <h2 className="mb-6">
               Let's build something remarkable together
             </h2>
-            <p className="text-xl text-foreground/70">
+            <p className="text-muted-foreground">
               Ready to transform your vision into reality? We'd love to hear from you.
             </p>
           </motion.div>

@@ -2,21 +2,23 @@ import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { Menu, X } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
+import { Link, useLocation } from 'react-router-dom';
 import logoLight from 'figma:asset/c612e158423c6a79984baab68630f1201eb5f5b9.png';
 import logoDark from 'figma:asset/51cf85ad5296b0c4dab24b1a631ed5846d68d175.png';
 
 const navLinks = [
-  { name: 'Home', href: '#home' },
-  { name: 'About', href: '#about' },
-  { name: 'Products', href: '#products' },
-  { name: 'Mission', href: '#mission' },
-  { name: 'Contact', href: '#contact' }
+  { name: 'Home', href: '/' },
+  { name: 'About', href: '/about' },
+  { name: 'Products', href: '/products' },
+  { name: 'Mission', href: '/mission' },
+  { name: 'Contact', href: '/contact' }
 ];
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDark, setIsDark] = useState(true);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -44,6 +46,13 @@ export function Navbar() {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    // Close mobile menu on route change
+    setIsMobileMenuOpen(false);
+    // Scroll to top on route change
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [location.pathname]);
+
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href);
     if (element) {
@@ -66,7 +75,7 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <a href="#home" onClick={(e) => { e.preventDefault(); scrollToSection('#home'); }} className="flex items-center group">
+          <Link to="/" className="flex items-center group">
             <motion.img
               src={isDark ? logoDark : logoLight}
               alt="StarNova Labs"
@@ -74,39 +83,39 @@ export function Navbar() {
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.2 }}
             />
-          </a>
+          </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
-            {navLinks.map((link, index) => (
-              <motion.a
-                key={link.name}
-                href={link.href}
-                onClick={(e) => { e.preventDefault(); scrollToSection(link.href); }}
-                className="relative text-sm font-medium text-foreground/70 hover:text-foreground transition-colors group"
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-              >
-                {link.name}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300" />
-              </motion.a>
-            ))}
+            {navLinks.map((link, index) => {
+              const isActive = location.pathname === link.href;
+              return (
+                <Link
+                  key={link.name}
+                  to={link.href}
+                  className={`relative text-sm font-medium transition-colors group ${
+                    isActive ? 'text-foreground' : 'text-foreground/70 hover:text-foreground'
+                  }`}
+                >
+                  {link.name}
+                  <span className={`absolute -bottom-1 left-0 h-0.5 bg-primary transition-all duration-300 ${
+                    isActive ? 'w-full' : 'w-0 group-hover:w-full'
+                  }`} />
+                </Link>
+              );
+            })}
           </div>
 
           {/* Right Side */}
           <div className="flex items-center gap-4">
             <ThemeToggle />
             
-            <motion.a
-              href="#contact"
-              onClick={(e) => { e.preventDefault(); scrollToSection('#contact'); }}
+            <Link
+              to="/contact"
               className="hidden md:block px-6 py-2.5 bg-primary text-white rounded-full text-sm font-semibold hover:bg-primary/90 transition-all duration-300 hover:shadow-lg hover:shadow-primary/30"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
             >
               Work With Us
-            </motion.a>
+            </Link>
 
             {/* Mobile Menu Button */}
             <button
@@ -126,23 +135,26 @@ export function Navbar() {
             exit={{ opacity: 0, height: 0 }}
             className="md:hidden py-4 border-t border-white/10"
           >
-            {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                onClick={(e) => { e.preventDefault(); scrollToSection(link.href); }}
-                className="block py-3 text-foreground/70 hover:text-foreground transition-colors"
-              >
-                {link.name}
-              </a>
-            ))}
-            <a
-              href="#contact"
-              onClick={(e) => { e.preventDefault(); scrollToSection('#contact'); }}
+            {navLinks.map((link) => {
+              const isActive = location.pathname === link.href;
+              return (
+                <Link
+                  key={link.name}
+                  to={link.href}
+                  className={`block py-3 transition-colors ${
+                    isActive ? 'text-foreground font-semibold' : 'text-foreground/70 hover:text-foreground'
+                  }`}
+                >
+                  {link.name}
+                </Link>
+              );
+            })}
+            <Link
+              to="/contact"
               className="block mt-4 px-6 py-2.5 bg-primary text-white rounded-full text-sm font-semibold text-center"
             >
               Work With Us
-            </a>
+            </Link>
           </motion.div>
         )}
       </div>

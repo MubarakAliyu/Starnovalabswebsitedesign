@@ -1,5 +1,6 @@
 import { Mail, Twitter, Linkedin, Github } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import logoLight from 'figma:asset/c612e158423c6a79984baab68630f1201eb5f5b9.png';
 import logoDark from 'figma:asset/51cf85ad5296b0c4dab24b1a631ed5846d68d175.png';
 
@@ -25,19 +26,12 @@ export function Footer() {
   }, []);
 
   const navLinks = [
-    { name: 'Home', href: '#home' },
-    { name: 'About', href: '#about' },
-    { name: 'Products', href: '#products' },
-    { name: 'Mission', href: '#mission' },
-    { name: 'Contact', href: '#contact' }
+    { name: 'Home', href: '/' },
+    { name: 'About', href: '/about' },
+    { name: 'Products', href: '/products' },
+    { name: 'Mission', href: '/mission' },
+    { name: 'Contact', href: '/contact' }
   ];
-
-  const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
 
   return (
     <footer className="bg-background border-t border-white/10 py-16">
@@ -62,13 +56,12 @@ export function Footer() {
             <ul className="space-y-3">
               {navLinks.map((link) => (
                 <li key={link.name}>
-                  <a
-                    href={link.href}
-                    onClick={(e) => { e.preventDefault(); scrollToSection(link.href); }}
+                  <Link
+                    to={link.href}
                     className="text-foreground/60 hover:text-primary transition-colors text-sm"
                   >
                     {link.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
