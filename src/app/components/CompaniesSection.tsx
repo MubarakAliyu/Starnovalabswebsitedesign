@@ -1,52 +1,30 @@
 import { motion } from 'motion/react';
 import { useEffect, useRef } from 'react';
+import { useLanguage } from '../context/LanguageContext';
 
-// Brand logos - using popular tech/education companies
+import greenboxLogo from '@/assets/greenbox.png';
+import kidsLogo from '@/assets/kids logo.png';
+import noorAlaLogo from '@/assets/NoorAlaLogo-1.png';
+import starOkLogo from '@/assets/starok.png';
+import startupKebbiLogo from '@/assets/startupkebbi.png';
+import startupLogo from '@/assets/startup.png';
+import starNovaLogo from '@/assets/logo-dark.png';
+import gdgKebbiLogo from '@/assets/gdgkebbi.png';
+
 const companies = [
-  {
-    name: 'Microsoft',
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg',
-    width: 140
-  },
-  {
-    name: 'Google',
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg',
-    width: 120
-  },
-  {
-    name: 'Amazon',
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg',
-    width: 110
-  },
-  {
-    name: 'IBM',
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg',
-    width: 90
-  },
-  {
-    name: 'Meta',
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/7/7b/Meta_Platforms_Inc._logo.svg',
-    width: 130
-  },
-  {
-    name: 'Adobe',
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/8/8d/Adobe_Corporate_Logo.svg',
-    width: 110
-  },
-  {
-    name: 'Salesforce',
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/f/f9/Salesforce.com_logo.svg',
-    width: 140
-  },
-  {
-    name: 'Oracle',
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/5/50/Oracle_logo.svg',
-    width: 110
-  }
+  { name: 'Kids In Tech', logo: kidsLogo, width: 180 },
+  { name: 'Startup Kebbi', logo: startupKebbiLogo, width: 180 },
+  { name: 'GDG Kebbi', logo: gdgKebbiLogo, width: 170 },
+  { name: 'Startup', logo: startupLogo, width: 180 },
+  { name: 'Greenbox', logo: greenboxLogo, width: 160 },
+  { name: 'NurAla Learning', logo: noorAlaLogo, width: 190 },
+  { name: 'StarOk', logo: starOkLogo, width: 170 },
+  { name: 'StarNova Labs', logo: starNovaLogo, width: 170 }
 ];
 
 export function CompaniesSection() {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const { lang } = useLanguage();
 
   useEffect(() => {
     const scrollContainer = scrollRef.current;
@@ -83,10 +61,12 @@ export function CompaniesSection() {
           className="text-center mb-16"
         >
           <h2 className="mb-4">
-            Trusted by Industry Leaders
+            {lang === 'en' ? 'Companies In Strategic Partnership' : 'Kamfanonin da muke da muhimman haɗin gwiwa da su'}
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Collaborating with organizations that share our vision for innovation and impact
+            {lang === 'en'
+              ? 'Collaborating with organizations that share our vision for innovation and impact'
+              : 'Muna yin aiki tare da ƙungiyoyi da kamfanoni da ke da irin hangen kirkira da tasirin da muke nema.'}
           </p>
         </motion.div>
 

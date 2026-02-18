@@ -1,5 +1,7 @@
 import { motion } from 'motion/react';
 import { BookOpen, Code, Sparkles, ArrowRight, ExternalLink, Rocket, Palette } from 'lucide-react';
+import { TechDotsBackground } from '../components/TechDotsBackground';
+import { useLanguage } from '../context/LanguageContext';
 
 const fadeInUp = {
   initial: { opacity: 0, y: 30 },
@@ -10,64 +12,57 @@ const fadeInUp = {
 
 const products = [
   {
+    icon: <Code className="w-full h-full" />,
+    title: 'Kids In Tech',
+    category: 'Learning Platform',
+    description: 'Teaching kids coding, digital creativity, and tech skills through interactive projects and community-led sessions.',
+    features: ['Coding tracks', 'Project-based learning', 'Mentor support', 'Community events'],
+    status: 'Live',
+    gradient: 'from-purple-600 to-purple-400',
+    link: 'https://www.kidsintech.school'
+  },
+  {
     icon: <BookOpen className="w-full h-full" />,
-    title: 'NūrAla Learning',
+    title: 'NurAla Learning',
     category: 'EdTech Platform',
-    description: 'A comprehensive Arabic and Qur\'anic learning platform designed to make sacred knowledge accessible, engaging, and beautifully presented for learners of all ages.',
-    features: ['Interactive lessons', 'Progress tracking', 'Gamified learning', 'Mobile-first design'],
+    description: 'Quranic Arabic & Islamic learning platform with guided lessons, assessments, and progress tracking.',
+    features: ['Guided lessons', 'Assessments', 'Mobile-first design', 'Progress insights'],
     status: 'Live',
     gradient: 'from-blue-600 to-blue-400',
     link: '#'
   },
   {
-    icon: <Code className="w-full h-full" />,
-    title: 'Kids in Tech Africa',
-    category: 'Youth Empowerment',
-    description: 'An innovative platform bringing coding education and digital skills to young minds across Africa, fostering the next generation of tech innovators and creators.',
-    features: ['Coding courses', 'Project-based learning', 'Mentor support', 'Community forums'],
-    status: 'Live',
-    gradient: 'from-purple-600 to-purple-400',
-    link: '#'
-  },
-  {
     icon: <Rocket className="w-full h-full" />,
-    title: 'Community Connect',
-    category: 'Social Platform',
-    description: 'A purpose-built platform for community organizations to engage members, organize events, and foster meaningful connections in digital and physical spaces.',
-    features: ['Event management', 'Member profiles', 'Discussion boards', 'Analytics dashboard'],
+    title: 'SkillStack',
+    category: 'Career & Skills',
+    description: 'Skills-based learning and career-building platform focused on projects, portfolios, and mentorship.',
+    features: ['Skill pathways', 'Portfolio builder', 'Mentorship', 'Career resources'],
     status: 'In Development',
     gradient: 'from-teal-600 to-teal-400',
     link: '#'
   },
   {
     icon: <Palette className="w-full h-full" />,
-    title: 'CreativeStudio Pro',
-    category: 'Creative Tools',
-    description: 'An all-in-one creative workspace for designers and artists to collaborate, share work, and build portfolios with integrated feedback and version control.',
-    features: ['Cloud storage', 'Team collaboration', 'Version history', 'Portfolio builder'],
+    title: 'EduStack',
+    category: 'School LMS',
+    description: 'School-focused LMS with course portals, student dashboards, and academic tools for teachers and admins.',
+    features: ['Course portals', 'Student dashboards', 'Teacher tools', 'Analytics'],
     status: 'In Development',
-    gradient: 'from-pink-600 to-pink-400',
-    link: '#'
-  },
-  {
-    icon: <Sparkles className="w-full h-full" />,
-    title: 'Future Innovations',
-    category: 'Coming Soon',
-    description: 'We\'re constantly exploring new ideas and technologies to create products that solve real problems and empower communities worldwide.',
-    features: ['AI-powered tools', 'Accessibility focus', 'Global reach', 'Open standards'],
-    status: 'Planning',
     gradient: 'from-amber-600 to-amber-400',
     link: '#'
   }
 ];
 
 export function ProductsPage() {
+  const { lang } = useLanguage();
+
   return (
     <div className="min-h-screen pt-20">
       {/* Hero Section */}
       <section className="py-32 px-6 lg:px-8 relative overflow-hidden">
-        <div className="absolute top-1/4 -left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-1/4 -right-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+        <TechDotsBackground />
+        <div className="absolute top-1/4 -left-1/4 w-96 h-96 bg-primary/15 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-1/4 -right-1/4 w-96 h-96 bg-primary/15 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
         
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <motion.div
@@ -76,11 +71,12 @@ export function ProductsPage() {
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
           >
             <h2 className="mb-6">
-              Our Products
+              {lang === 'en' ? 'Our Products' : 'Kayayyakinmu'}
             </h2>
             <p className="text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              Crafted with care, built to inspire, designed to make a difference. 
-              Explore our suite of digital products that empower minds and transform learning experiences.
+              {lang === 'en'
+                ? 'Our products are built to solve real-world problems across education, skills development, and digital learning.'
+                : 'Kayayyakinmu sun mayar da hankali kan warware matsaloli a fannin ilimi, gina ƙwarewa da koyo ta yanar gizo.'}
             </p>
           </motion.div>
         </div>
@@ -98,7 +94,7 @@ export function ProductsPage() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: index * 0.1 }}
                 whileHover={{ y: -8, scale: 1.02 }}
-                className="group relative bg-card-bg backdrop-blur-sm border border-white/10 rounded-2xl p-8 overflow-hidden cursor-pointer"
+                className="group relative glass-card p-8 overflow-hidden cursor-pointer"
               >
                 <div className={`absolute inset-0 bg-gradient-to-br ${product.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
                 
@@ -123,7 +119,15 @@ export function ProductsPage() {
                     {product.title}
                   </h3>
                   <p className="text-foreground/70 mb-6 leading-relaxed">
-                    {product.description}
+                    {lang === 'en'
+                      ? product.description
+                      : product.title === 'Kids In Tech'
+                        ? 'Shirin koyo ne da ke koya wa yara lambar kwamfuta, kirkirar dijital da ƙwarewar fasaha ta hanyar ayyuka da al’umma.'
+                        : product.title === 'NurAla Learning'
+                          ? 'Dandamali ne na koyo Alƙur’ani da harshen Larabci tare da darussa, gwaje-gwaje da bin cigaban ɗalibi.'
+                          : product.title === 'SkillStack'
+                            ? 'Dandamali ne na gina ƙwarewa da sana’a ta hanyar ayyuka, jakar ayyuka da jagoranci.'
+                            : 'Dandamalin makarantu ne da ke haɗa darussa, ɗalibai da kayan aikin malamai cikin wuri guda.'}
                   </p>
 
                   {/* Features */}
@@ -143,8 +147,15 @@ export function ProductsPage() {
                   <motion.button
                     className="inline-flex items-center gap-2 text-primary font-semibold group-hover:gap-3 transition-all"
                     whileHover={{ x: 5 }}
+                    onClick={() => {
+                      if (product.status === 'Live' && product.link) {
+                        window.open(product.link, '_blank', 'noopener,noreferrer');
+                      }
+                    }}
                   >
-                    {product.status === 'Live' ? 'Learn More' : 'View Details'}
+                    {product.status === 'Live'
+                      ? lang === 'en' ? 'Visit Website' : 'Ziyarci Yanar Gizo'
+                      : lang === 'en' ? 'View Product' : 'Duba Samfur'}
                     <ArrowRight className="w-5 h-5" />
                   </motion.button>
                 </div>
@@ -175,11 +186,12 @@ export function ProductsPage() {
             
             <div className="relative z-10">
               <h2 className="mb-4">
-                Need something custom?
+                {lang === 'en' ? 'Need something custom?' : 'Kana Bukatar Abu na Musamman?'}
               </h2>
               <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
-                We create bespoke digital products tailored to your unique needs. 
-                Let's collaborate on building something extraordinary together.
+                {lang === 'en'
+                  ? 'We create bespoke digital products tailored to your unique needs. Let\'s collaborate on building something extraordinary together.'
+                  : 'Muna ƙirƙirar kayayyakin dijital na musamman da suka dace da bukatunku. Mu yi aiki tare mu gina wani abu na musamman.'}
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <motion.a
@@ -188,7 +200,7 @@ export function ProductsPage() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  Start a Project
+                  {lang === 'en' ? 'Start a Project' : 'Fara Aiki da Mu'}
                   <ArrowRight className="w-5 h-5" />
                 </motion.a>
                 <motion.a
@@ -197,7 +209,7 @@ export function ProductsPage() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  Learn More About Us
+                  {lang === 'en' ? 'Learn More About Us' : 'Kara Koyo Game da Mu'}
                 </motion.a>
               </div>
             </div>

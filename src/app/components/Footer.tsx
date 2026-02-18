@@ -1,11 +1,13 @@
 import { Mail, Twitter, Linkedin, Github } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import logoLight from 'figma:asset/c612e158423c6a79984baab68630f1201eb5f5b9.png';
-import logoDark from 'figma:asset/51cf85ad5296b0c4dab24b1a631ed5846d68d175.png';
+import logoLight from '../../assets/logo-dark.png';
+import logoDark from '../../assets/logo-light.png';
+import { useLanguage } from '../context/LanguageContext';
 
 export function Footer() {
   const [isDark, setIsDark] = useState(true);
+  const { lang } = useLanguage();
 
   useEffect(() => {
     // Check theme on mount and listen for changes
@@ -26,11 +28,11 @@ export function Footer() {
   }, []);
 
   const navLinks = [
-    { name: 'Home', href: '/' },
-    { name: 'About', href: '/about' },
-    { name: 'Products', href: '/products' },
-    { name: 'Mission', href: '/mission' },
-    { name: 'Contact', href: '/contact' }
+    { key: 'home', href: '/' },
+    { key: 'about', href: '/about' },
+    { key: 'products', href: '/products' },
+    { key: 'services', href: '/services' },
+    { key: 'contact', href: '/contact' }
   ];
 
   return (
@@ -43,33 +45,51 @@ export function Footer() {
               <img src={isDark ? logoDark : logoLight} alt="StarNova Labs" className="h-7 w-auto" />
             </div>
             <p className="text-foreground/60 mb-6 max-w-sm leading-relaxed">
-              Building meaningful technology for learning, creativity, and the future.
+              {lang === 'en'
+                ? 'A creative technology lab building digital products, brands, learning platforms, and business solutions.'
+                : 'Dakin kirkirar fasaha ne da ke gina kayayyakin dijital, alamomin kasuwanci, dandamalin koyo da mafita ga kasuwanci.'}
             </p>
             <p className="text-sm text-foreground/40">
-              Built with ❤️ inside StarNova Labs
+              {lang === 'en' ? 'Built with ❤️ inside StarNova Labs' : 'An gina shi da ƙauna a StarNova Labs'}
             </p>
           </div>
 
           {/* Navigation */}
           <div>
-            <h4 className="text-foreground font-semibold mb-4">Navigation</h4>
+            <h4 className="text-foreground font-semibold mb-4">
+              {lang === 'en' ? 'Navigation' : 'Shafuka'}
+            </h4>
             <ul className="space-y-3">
-              {navLinks.map((link) => (
-                <li key={link.name}>
-                  <Link
-                    to={link.href}
-                    className="text-foreground/60 hover:text-primary transition-colors text-sm"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
+              {navLinks.map((link) => {
+                const label =
+                  link.key === 'home'
+                    ? lang === 'en' ? 'Home' : 'Gida'
+                    : link.key === 'about'
+                      ? lang === 'en' ? 'About' : 'Game da Mu'
+                      : link.key === 'products'
+                        ? lang === 'en' ? 'Products' : 'Kayayyakinmu'
+                        : link.key === 'services'
+                          ? lang === 'en' ? 'Services' : 'Ayyuka'
+                          : lang === 'en' ? 'Contact' : 'Tuntuɓe Mu';
+                return (
+                  <li key={link.key}>
+                    <Link
+                      to={link.href}
+                      className="text-foreground/60 hover:text-primary transition-colors text-sm"
+                    >
+                      {label}
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
           </div>
 
           {/* Contact */}
           <div>
-            <h4 className="text-foreground font-semibold mb-4">Connect</h4>
+            <h4 className="text-foreground font-semibold mb-4">
+              {lang === 'en' ? 'Connect' : 'Tuntuɓa'}
+            </h4>
             <div className="flex gap-4 mb-4">
               <a
                 href="mailto:hello@starnovalabs.com"
@@ -112,11 +132,15 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-foreground/40 text-sm">
-            © {new Date().getFullYear()} StarNova Labs. All rights reserved.
+            © {new Date().getFullYear()} StarNova Labs. {lang === 'en' ? 'All rights reserved.' : 'Dukkan haƙƙoƙi a tanƙwafe suke.'}
           </p>
           <div className="flex gap-6 text-sm text-foreground/40">
-            <a href="#" className="hover:text-primary transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-primary transition-colors">Terms of Service</a>
+            <a href="#" className="hover:text-primary transition-colors">
+              {lang === 'en' ? 'Privacy Policy' : 'Manufar Sirri'}
+            </a>
+            <a href="#" className="hover:text-primary transition-colors">
+              {lang === 'en' ? 'Terms of Service' : 'Sharuddan Amfani'}
+            </a>
           </div>
         </div>
       </div>

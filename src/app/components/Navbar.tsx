@@ -3,21 +3,23 @@ import { motion } from 'motion/react';
 import { Menu, X } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
 import { Link, useLocation } from 'react-router-dom';
-import logoLight from 'figma:asset/c612e158423c6a79984baab68630f1201eb5f5b9.png';
-import logoDark from 'figma:asset/51cf85ad5296b0c4dab24b1a631ed5846d68d175.png';
+import logoLight from '../../assets/logo-dark.png';
+import logoDark from '../../assets/logo-light.png';
+import { useLanguage } from '../context/LanguageContext';
 
 const navLinks = [
-  { name: 'Home', href: '/' },
-  { name: 'About', href: '/about' },
-  { name: 'Products', href: '/products' },
-  { name: 'Mission', href: '/mission' },
-  { name: 'Contact', href: '/contact' }
+  { key: 'home', href: '/' },
+  { key: 'about', href: '/about' },
+  { key: 'products', href: '/products' },
+  { key: 'services', href: '/services' },
+  { key: 'contact', href: '/contact' }
 ];
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDark, setIsDark] = useState(true);
+  const { lang, setLang } = useLanguage();
   const location = useLocation();
 
   useEffect(() => {
@@ -53,21 +55,13 @@ export function Navbar() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [location.pathname]);
 
-  const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-      setIsMobileMenuOpen(false);
-    }
-  };
-
   return (
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
+        isScrolled || isMobileMenuOpen
           ? 'bg-background/80 dark:bg-background/80 backdrop-blur-xl border-b border-white/10'
           : 'bg-transparent'
       }`}
@@ -87,34 +81,72 @@ export function Navbar() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
-            {navLinks.map((link, index) => {
+            {navLinks.map((link) => {
               const isActive = location.pathname === link.href;
+              const label =
+                link.key === 'home'
+                  ? lang === 'en' ? 'Home' : 'Gida'
+                  : link.key === 'about'
+                    ? lang === 'en' ? 'About' : 'Game da Mu'
+                    : link.key === 'products'
+                      ? lang === 'en' ? 'Products' : 'Kayayyakinmu'
+                      : link.key === 'services'
+                        ? lang === 'en' ? 'Services' : 'Ayyuka'
+                        : lang === 'en' ? 'Contact' : 'Tuntuɓe Mu';
               return (
                 <Link
-                  key={link.name}
+                  key={link.key}
                   to={link.href}
                   className={`relative text-sm font-medium transition-colors group ${
                     isActive ? 'text-foreground' : 'text-foreground/70 hover:text-foreground'
                   }`}
                 >
-                  {link.name}
-                  <span className={`absolute -bottom-1 left-0 h-0.5 bg-primary transition-all duration-300 ${
-                    isActive ? 'w-full' : 'w-0 group-hover:w-full'
-                  }`} />
+                  {label}
+                  <span
+                    className={`absolute -bottom-1 left-0 h-0.5 bg-primary transition-all duration-300 ${
+                      isActive ? 'w-full' : 'w-0 group-hover:w-full'
+                    }`}
+                  />
                 </Link>
               );
             })}
           </div>
 
           {/* Right Side */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
+            {/* Language Toggle */}
+            <div className="flex items-center rounded-full border border-white/20 bg-white/60 dark:bg-white/10 backdrop-blur-sm px-1 py-0.5 text-xs font-semibold shadow-sm">
+              <button
+                type="button"
+                onClick={() => setLang('en')}
+                className={`px-3 py-1 rounded-full transition-colors ${
+                  lang === 'en'
+                    ? 'bg-primary text-white'
+                    : 'text-foreground/70 hover:text-foreground'
+                }`}
+              >
+                EN
+              </button>
+              <button
+                type="button"
+                onClick={() => setLang('ha')}
+                className={`px-3 py-1 rounded-full transition-colors ${
+                  lang === 'ha'
+                    ? 'bg-primary text-white'
+                    : 'text-foreground/70 hover:text-foreground'
+                }`}
+              >
+                HA
+              </button>
+            </div>
+
             <ThemeToggle />
             
             <Link
               to="/contact"
               className="hidden md:block px-6 py-2.5 bg-primary text-white rounded-full text-sm font-semibold hover:bg-primary/90 transition-all duration-300 hover:shadow-lg hover:shadow-primary/30"
             >
-              Work With Us
+              {lang === 'en' ? 'Work With Us' : 'Mu Yi Aiki Tare'}
             </Link>
 
             {/* Mobile Menu Button */}
@@ -133,19 +165,29 @@ export function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden py-4 border-t border-white/10"
+            className="md:hidden py-4 border-t border-white/10 bg-background/95 dark:bg-background/95 backdrop-blur-xl shadow-xl"
           >
             {navLinks.map((link) => {
               const isActive = location.pathname === link.href;
+              const label =
+                link.key === 'home'
+                  ? lang === 'en' ? 'Home' : 'Gida'
+                  : link.key === 'about'
+                    ? lang === 'en' ? 'About' : 'Game da Mu'
+                    : link.key === 'products'
+                      ? lang === 'en' ? 'Products' : 'Kayayyakinmu'
+                      : link.key === 'services'
+                        ? lang === 'en' ? 'Services' : 'Ayyuka'
+                        : lang === 'en' ? 'Contact' : 'Tuntuɓe Mu';
               return (
                 <Link
-                  key={link.name}
+                  key={link.key}
                   to={link.href}
                   className={`block py-3 transition-colors ${
                     isActive ? 'text-foreground font-semibold' : 'text-foreground/70 hover:text-foreground'
                   }`}
                 >
-                  {link.name}
+                  {label}
                 </Link>
               );
             })}
@@ -153,7 +195,7 @@ export function Navbar() {
               to="/contact"
               className="block mt-4 px-6 py-2.5 bg-primary text-white rounded-full text-sm font-semibold text-center"
             >
-              Work With Us
+              {lang === 'en' ? 'Work With Us' : 'Mu Yi Aiki Tare'}
             </Link>
           </motion.div>
         )}
